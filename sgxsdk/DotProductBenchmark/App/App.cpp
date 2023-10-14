@@ -186,35 +186,10 @@ int SGX_CDECL main(int argc, char* argv[]) {
         return -1;
     }
 
-    // Get the sealed data size
-    uint32_t sealed_data_size = 0;
-    ret = get_sealed_data_size(global_eid, &sealed_data_size);
-    if (ret != SGX_SUCCESS) {
-        // ret_error_support(ret);
-        sgx_destroy_enclave(global_eid);
-        return false;
-    } else if (sealed_data_size == UINT32_MAX) {
-        sgx_destroy_enclave(global_eid);
-        return false;
-    }
-
-    printf("sealed data size: %d\n", sealed_data_size);
-
-    /* Utilize edger8r attributes */
-    edger8r_array_attributes();
-    edger8r_pointer_attributes();
-    edger8r_type_attributes();
-    edger8r_function_attributes();
-
-    /* Utilize trusted libraries */
-    ecall_libc_functions();
-    ecall_libcxx_functions();
-    ecall_thread_functions();
-
     int benchmark_repeats = atoi(argv[2]);
 
     for (int i = 0; i < benchmark_repeats; i++) {
-        printf("------Test number %d------\n", i+1);
+        printf("------Test number %d------\n", i + 1);
         benchmark_dot_product(true, atoi(argv[1]));
         benchmark_dot_product(false, atoi(argv[1]));
         printf("-------------------\n");
@@ -223,7 +198,7 @@ int SGX_CDECL main(int argc, char* argv[]) {
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);
 
-    printf("Info: SampleEnclave successfully returned.\n");
+    printf("Info: DotProductBenchmark successfully returned.\n");
 
     // printf("Enter a character before exit ...\n");
     // getchar();

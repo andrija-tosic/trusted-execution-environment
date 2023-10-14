@@ -57,7 +57,7 @@ sgx_status_t ecall_test_string(char* str) {
     // printf(str);
     // printf("\n");
 
-    for (size_t i = 0; i < 32; i++) {
+    for (size_t i = 0; i < strlen(str); i++) {
         str[i] = ('a' + i) % 26;
     }
 
